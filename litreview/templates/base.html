@@ -43,7 +43,7 @@
                         <li class="nav-item">
                             <form action="{% url 'logout' %}" method="post">
                                 {% csrf_token %}
-                                <button class="btn btn-danger" type="submit">Déconnexion</button>
+                                <button class="btn btn-info" type="submit">Déconnexion</button>
                             </form>
                         </li>
                     {% else %}
