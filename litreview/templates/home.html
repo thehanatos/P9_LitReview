@@ -11,9 +11,9 @@
             <button type="submit" class="btn btn-info">Se déconnecter</button>
         </form>
     {% else %}
-        <p class="mb-3 alert alert-primary">Vous n'êtes pas connecté.</p>
-        <a href="{% url 'login' %}" class="btn btn-primary">Se connecter</a>
-        <a href="{% url 'signup' %}" class="btn btn-primary">S'inscrire</a>
+        <p class="mb-3 alert alert-info">Vous n'êtes pas connecté.</p>
+        <a href="{% url 'login' %}" class="btn btn-info">Se connecter</a>
+        <a href="{% url 'signup' %}" class="btn btn-info">S'inscrire</a>
     {% endif %}
 </div>
 {% endblock %}
