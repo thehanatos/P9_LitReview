@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="text-center">
+<div class="form-signin w-100 m-auto text-center">
     {% if user.is_authenticated %}
         <h2 class="mb-3">Bienvenue, {{ user.username }} !</h2>
         <form action="{% url 'logout' %}" method="post">
@@ -11,7 +11,7 @@
             <button type="submit" class="btn btn-danger">Se déconnecter</button>
         </form>
     {% else %}
-        <p class="alert alert-warning">Vous n'êtes pas connecté.</p>
+        <p class="mb-3 alert alert-warning">Vous n'êtes pas connecté.</p>
         <a href="{% url 'login' %}" class="btn btn-primary">Se connecter</a>
         <a href="{% url 'signup' %}" class="btn btn-success">S'inscrire</a>
     {% endif %}
