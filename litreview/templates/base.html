@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-bs-theme="dark"> <!-- Mode sombre forcé -->
+<html lang="fr" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,16 +7,24 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
-        .form-signin {
-            max-width: 330px;
-            padding: 1rem;
-            margin: auto;
+        body {
+            background-color: #2b3035; /* Fond sombre personnalisé */
+            color: white; /* Texte blanc */
         }
+
+        .form-container {
+            background-color: transparent !important; /* Pas d'effet sur le formulaire */
+        }
+        .form-signin {
+          max-width: 330px;
+          padding: 1rem;
+          margin: auto;
+      }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100 bg-dark text-white"> <!-- Fond sombre et texte blanc -->
+<body class="d-flex flex-column min-vh-100">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,7 +52,7 @@
     </nav>
 
     <!-- Contenu des pages -->
-    <div class="container mt-5">
+    <div class="container mt-5 form-container">
         {% block content %}{% endblock %}
     </div>
 
