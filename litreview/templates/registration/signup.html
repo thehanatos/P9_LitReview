@@ -1,12 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
+{% comment %} <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Sign Up</button>
-</form>
+  <button type="submit">S'inscrire</button>
+</form> {% endcomment %}
+<main class="form-signin w-100 m-auto text-center">
+  <form method="post">
+      {% csrf_token %}
+      <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+      <h1 class="h3 mb-3 fw-normal">Inscription</h1>
+
+      <div class="form-floating">
+          <input type="text" name="{{ form.username.name }}" class="form-control" id="floatingInput" placeholder="Nom d'utilisateur" required>
+          <label for="floatingInput">Nom d'utilisateur</label>
+      </div>
+      <div class="form-floating">
+          <input type="password" name="{{ form.password1.name }}" class="form-control" id="floatingPassword" placeholder="Mot de passe" required>
+          <label for="floatingPassword">Mot de passe</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" name="{{ form.password2.name }}" class="form-control" id="floatingPassword" placeholder="Mot de passe" required>
+        <label for="floatingPassword">Confirmer mot de passe</label>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2 mt-3" type="submit">S'inscrire</button>
+      <p class="mt-5 mb-3 text-body-secondary">&copy; 2025</p>
+  </form>
+</main>
+
 {% endblock %}
