@@ -1,54 +1,98 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Suivre d'autres utilisateurs</h2>
+<div class="container-fluid">
+    {% comment %} <h5>Suivre d'autres utilisateurs</h5> {% endcomment %}
 
-<!-- Search bar -->
-<form method="GET" action="{% url 'subscriptions:subscriptions_view' %}">
-    <input type="text" name="q" placeholder="Rechercher un utilisateur..." value="{{ query }}">
-    <button type="submit">Rechercher</button>
-</form>
+    <!-- Search bar -->
 
-<!-- Search results -->
-{% if query %}
-    <h3>Résultats pour "{{ query }}"</h3>
-    <ul>
-        {% for user in users %}
-            <li>
-                {{ user.username }}
-                {% if user.id in following_user_ids %}
-                    <a href="{% url 'subscriptions:unfollow_user' user.id %}">Se désabonner</a>
-                {% else %}
-                    <a href="{% url 'subscriptions:follow_user' user.id %}">S'abonner</a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>Aucun utilisateur trouvé.</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+    <div class="col-sd-12 p-1">
+        <form class="d-flex" role="search" method="GET" action="{% url 'subscriptions:subscriptions_view' %}">
+        <input class="form-control me-2" type="text" name="q" placeholder="Rechercher un utilisateur..." value="{{ query }}" aria-label="Search">
+        <button class="btn btn-outline-info" type="submit">Rechercher</button>
+        </form>
+    </div>
 
-<!-- List of my subscriptions -->
-<h3>Abonnements :</h3>
-<ul>
-    {% for sub in following %}
-        <li>
-            {{ sub.followed.username }}
-            <a href="{% url 'subscriptions:unfollow_user' sub.followed.id %}">Se désabonner</a>
-        </li>
-    {% empty %}
-        <li>Vous ne suivez personne.</li>
-    {% endfor %}
-</ul>
 
-<!-- List of my followers -->
-<h3>Abonnés :</h3>
-<ul>
-    {% for sub in followers %}
-        <li>{{ sub.follower.username }}</li>
-    {% empty %}
-        <li>Personne ne vous suit.</li>
-    {% endfor %}
-</ul>
+    </br>
 
+    <!-- Search results -->
+    {% if query %}
+        <br/>
+        <div class="card text-bg-dark mb-3" >
+            <div class="card-header">Résultats pour : "{{ query }}"</div>
+            <div class="card-body">
+            {% comment %} <h5 class="card-title">Résultats pour : "{{ query }}"</h5> {% endcomment %}
+            <p class="card-text">
+                <ul>
+                    {% for user in users %}
+                        <li class="list-group-item btn-group-vertical">
+                            <br>
+                            {{ user.username }} <br>
+                            {% if user.id in following_user_ids %}
+                                <button type="button" class="btn btn-info" style="max-width: 35rem;" onclick="location.href='{% url 'subscriptions:unfollow_user' user.id %}'">Se désabonner</button>
+                            {% else %}
+                                <button type="button" class="btn btn-info" style="max-width: 35rem;" onclick="location.href='{% url 'subscriptions:follow_user' user.id %}'">S'abonner</button>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">Aucun utilisateur trouvé.</li>
+                    {% endfor %}
+                </ul>
+            </p>
+            </div>
+        </div>
+    {% endif %}
+    <br/>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <!-- List of my subscriptions -->
+        <div class="col">
+            <div class="card text-bg-dark h-100">
+            <div class="card-header">Abonnements</div>
+            <div class="card-body">
+            {% comment %} <h5 class="card-title">Abonnements</h5> {% endcomment %}
+            <p class="card-text">
+                <ul>
+                    {% for sub in following %}
+                        <li class="list-group-item btn-group-vertical">
+                            {{ sub.followed.username }}
+                            <button type="button" class="btn btn-info" onclick="location.href='{% url 'subscriptions:unfollow_user' sub.followed.id %}'">Se désabonner</button>
+                            &nbsp;
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">Vous ne suivez personne.</li>
+                    {% endfor %}
+                </ul>
+            </p>
+            </div>
+            <div class="card-footer">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+        </div>
+        <!-- List of my followers -->
+        <div class="col">
+            <div class="card text-bg-dark h-100">
+                <div class="card-header">Abonnés</div>
+                <div class="card-body">
+                    {% comment %} <h5 class="card-title">Abonnés</h5> {% endcomment %}
+                    <p class="card-text">
+                        <ul>
+                            {% for sub in followers %}
+                                <li class="list-group-item">{{ sub.follower.username }}</li><br>
+                            {% empty %}
+                                <li class="list-group-item">Personne ne vous suit.</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+</div>
 {% endblock %}
