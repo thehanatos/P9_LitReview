@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Suivre d'autres utilisateurs</h2>
+
+<!-- Search bar -->
+<form method="GET" action="{% url 'subscriptions:subscriptions_view' %}">
+    <input type="text" name="q" placeholder="Rechercher un utilisateur..." value="{{ query }}">
+    <button type="submit">Rechercher</button>
+</form>
+
+<!-- Search results -->
+{% if query %}
+    <h3>Résultats pour "{{ query }}"</h3>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }}
+                {% if user.id in following_user_ids %}
+                    <a href="{% url 'subscriptions:unfollow_user' user.id %}">Se désabonner</a>
+                {% else %}
+                    <a href="{% url 'subscriptions:follow_user' user.id %}">S'abonner</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Aucun utilisateur trouvé.</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<!-- List of my subscriptions -->
+<h3>Abonnements :</h3>
+<ul>
+    {% for sub in following %}
+        <li>
+            {{ sub.followed.username }}
+            <a href="{% url 'subscriptions:unfollow_user' sub.followed.id %}">Se désabonner</a>
+        </li>
+    {% empty %}
+        <li>Vous ne suivez personne.</li>
+    {% endfor %}
+</ul>
+
+<!-- List of my followers -->
+<h3>Abonnés :</h3>
+<ul>
+    {% for sub in followers %}
+        <li>{{ sub.follower.username }}</li>
+    {% empty %}
+        <li>Personne ne vous suit.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
