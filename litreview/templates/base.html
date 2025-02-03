@@ -53,6 +53,9 @@
                                 <button class="btn btn-info" type="submit">Déconnexion</button>
                             </form>
                         </li>
+                        <div class="badge fw-normal fs-5" style="width: 6rem;">
+                            {{ user.username }}
+                          </div>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Inscription</a></li>
