@@ -10,7 +10,8 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-info">Se déconnecter</button>
         </form>
-        <a href="{% url 'tickets:create_ticket' %}" class="btn btn-primary">Créer un Ticket</a>
+        <br>
+        <a href="{% url 'tickets:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
     {% else %}
         <p class="mb-3 alert alert-info">Vous n'êtes pas connecté.</p>
         <a href="{% url 'login' %}" class="btn btn-info">Se connecter</a>
