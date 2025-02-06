@@ -2,19 +2,21 @@
 
 {% block content %}
 <h2>Liste des Tickets</h2>
-
+<br>
 {% for ticket in tickets %}
-    <div>
-        <h3>{{ ticket.book_title }}</h3>
+    <div class="col-12">
+        <h4>{{ ticket.book_title }}</h4>
+        <br>
         <p>{{ ticket.description }}</p>
         {% if ticket.image %}
-            <img src="{{ ticket.image.url }}" alt="Image du ticket" width="200">
+            <img src="{{ ticket.image.url }}" alt="Image du ticket" width="200"><br>
         {% endif %}
+        <br>
         <p>Posté par {{ ticket.user.username }} le {{ ticket.created_at }}</p>
     </div>
 {% empty %}
     <p>Aucun ticket disponible.</p>
 {% endfor %}
 
-<a href="{% url 'tickets:create_ticket' %}">Créer un nouveau Ticket</a>
+<a href="{% url 'tickets:create_ticket' %}" class="link-info">Créer un nouveau Ticket</a>
 {% endblock %}

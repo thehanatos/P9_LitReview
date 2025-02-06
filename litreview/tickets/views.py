@@ -11,7 +11,10 @@ def create_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user  # Associer l'utilisateur connecté
             ticket.save()
+            print(f"✅ Ticket créé : {ticket.book_title} par {ticket.user}")
             return redirect("tickets:ticket_list")  # Redirection après création
+        else:
+            print("❌ Erreur : Formulaire invalide", form.errors)
     else:
         form = TicketForm()
 
