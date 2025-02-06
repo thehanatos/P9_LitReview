@@ -4,10 +4,10 @@
 <h2>Créer un Ticket</h2>
 <br>
 
-<form class="row g-4" method="POST" enctype="multipart/form-data">
+<form class="row g-4 mb-4" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-12">
-        <label for="inputAddress" class="form-label">Titre :</label>
+        <label for="inputAddress" class="form-label"></label>
         <input type="text" class="form-control" id="inputAddress" id="id_book_title" name="book_title" placeholder="Titre du livre" required>
     </div>
     <div class="input-group">
@@ -15,14 +15,14 @@
         <textarea class="form-control" id="id_description" name="description" aria-label="Description" required></textarea>
     </div>
     <div class="col-12">
-        <label for="formFile" for="id_image" class="form-label">Image :</label>
-        <input class="form-control" type="file" id="formFile" id="id_image" name="image">
+        <input class="form-control d-none" type="file" id="formFile" id="id_image" name="image">
+        <label for="formFile" class="btn btn-outline-info">Sélectionner une image</label>
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-info">Envoyer</button>
     </div>
 </form>
-<br>
+
 <a href="{% url 'tickets:ticket_list' %}" class="link-info" >Retour à la liste des tickets</a>
 
 {% endblock %}

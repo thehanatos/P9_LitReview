@@ -4,10 +4,10 @@
 <h2>Liste des Tickets</h2>
 <br>
 {% for ticket in tickets %}
-    <div class="col-12">
+    <div class="col-6">
         <h4>{{ ticket.book_title }}</h4>
         <br>
-        <p>{{ ticket.description }}</p>
+        <p>{{ ticket.description }}</p><br>
         {% if ticket.image %}
             <img src="{{ ticket.image.url }}" alt="Image du ticket" width="200"><br>
         {% endif %}
@@ -19,4 +19,5 @@
 {% endfor %}
 
 <a href="{% url 'tickets:create_ticket' %}" class="link-info">Créer un nouveau Ticket</a>
+<br><br>
 {% endblock %}
