@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Créer un Ticket</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="id_book_title">Titre :</label>
+    {{ form.book_title }}
+
+    <label for="id_description">Description :</label>
+    {{ form.description }}
+
+    <label for="id_image">Image :</label>
+    {{ form.image }}
+
+    <button type="submit">Envoyer</button>
+</form>
+
+<a href="{% url 'tickets:ticket_list' %}">Retour à la liste des tickets</a>
+
+{% endblock %}
