@@ -27,7 +27,7 @@ urlpatterns = [
     path("authentification/", include("authentification.urls")),
     path("authentification/", include("django.contrib.auth.urls")),
     path('subscriptions/', include('subscriptions.urls')),
-    path("tickets/", include("tickets.urls")),
+    path('billet/', include(('billet.urls', 'billet'), namespace='billet')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

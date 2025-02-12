@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'authentification',
     'django_extensions',
     'subscriptions',
-    'tickets',
+    'billet',
 ]
 
 MIDDLEWARE = [
