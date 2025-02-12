@@ -8,7 +8,7 @@
     {% csrf_token %}
     <div class="col-12">
         <label for="inputAddress" class="form-label"></label>
-        <input type="text" class="form-control" id="inputAddress" id="id_book_title" name="book_title" placeholder="Titre du livre" required>
+        <input type="text" class="form-control" id="inputAddress" id="id_book_title" name="title" placeholder="Titre du livre" required>
     </div>
     <div class="input-group">
         <span for="id_message" class="input-group-text">Description</span>
@@ -23,6 +23,6 @@
     </div>
 </form>
 
-<a href="{% url 'tickets:ticket_list' %}" class="link-info" >Retour à la liste des tickets</a>
+<a href="{% url 'billet:list_tickets' %}" class="link-info" >Retour à la liste des tickets</a>
 
 {% endblock %}

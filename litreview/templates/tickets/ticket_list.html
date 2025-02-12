@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <h2>Liste des Tickets</h2>
 <br>
-{% for ticket in tickets %}
+<a href="{% url 'billet:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
+
+    {% for ticket in tickets %}
     <div class="col-6">
         <h4>{{ ticket.book_title }}</h4>
         <br>
@@ -13,11 +14,11 @@
         {% endif %}
         <br>
         <p>Posté par {{ ticket.user.username }} le {{ ticket.created_at }}</p>
+        <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger">Supprimer</a>
     </div>
 {% empty %}
     <p>Aucun ticket disponible.</p>
 {% endfor %}
 
-<a href="{% url 'tickets:create_ticket' %}" class="link-info">Créer un nouveau Ticket</a>
 <br><br>
 {% endblock %}

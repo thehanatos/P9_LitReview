@@ -11,7 +11,7 @@
             <button type="submit" class="btn btn-info">Se déconnecter</button>
         </form>
         <br>
-        <a href="{% url 'tickets:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
+        <a href="{% url 'billet:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
     {% else %}
         <p class="mb-3 alert alert-info">Vous n'êtes pas connecté.</p>
         <a href="{% url 'login' %}" class="btn btn-info">Se connecter</a>
