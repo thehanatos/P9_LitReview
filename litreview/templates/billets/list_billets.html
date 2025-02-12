@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Liste des Billets</h2>
+<br>
+    {% for billet in billets %}
+        <div class="col-6">
+                <h4>{{ billet.ticket.title }}</h4>
+                <br>
+                <p><strong>Demande :</strong> {{ billet.ticket.description }}</p><br>
+                {% if billet.ticket.image %}
+                    <img src="{{ billet.ticket.image.url }}" alt="Image du ticket" width="150"><br>
+                {% endif %}
+                <hr>
+                <h4>Critique</h4>
+                <p><strong>{{ billet.critic.titre }}</strong> Note : ⭐ {{ billet.critic.note }}/5</p>
+                <p>{{ billet.critic.comment }}</p><br>
+                <p>Posté par <strong>{{ billet.user.username }}</strong> le {{ billet.critic.date_creation|date:"d M Y" }} </p>
+        </div><br>
+    {% empty %}
+        <p>Aucun billet disponible.</p>
+    {% endfor %}
+<br>
+{% endblock %}

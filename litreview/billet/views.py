@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Ticket, Critic
+from .models import Ticket, Critic, Billet
 from .forms import TicketForm, CriticForm, BilletForm
 
 def create_ticket(request):
@@ -26,20 +26,38 @@ def create_critic(request, ticket_id=None):
             critic.user = request.user
             critic.ticket = ticket
             critic.save()
-            return redirect('list_critics')
+            return redirect('billet:list_critics')
     else:
         form = CriticForm()
     return render(request, 'billet/create_critic.html', {'form': form, 'ticket': ticket})
 
 def create_billet(request):
-    if request.method == "POST":
-        form = BilletForm(request.POST)
-        if form.is_valid():
-            billet = form.save(user=request.user)
-            return redirect('list_billets')
+    if request.method == 'POST':
+        ticket_form = TicketForm(request.POST, request.FILES)
+        critic_form = CriticForm(request.POST)
+        
+        if ticket_form.is_valid() and critic_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user  # Associer l'utilisateur actuel
+            ticket.save()
+
+            critic = critic_form.save(commit=False)
+            critic.user = request.user
+            critic.ticket = ticket  # Associer le ticket à la critique
+            critic.save()
+
+            billet = Billet.objects.create(user=request.user, ticket=ticket, critic=critic)
+            billet.save()
+
+            return redirect('billet:list_billets')  # Rediriger après la création
     else:
-        form = BilletForm()
-    return render(request, 'billet/create_billet.html', {'form': form})
+        ticket_form = TicketForm()
+        critic_form = CriticForm()
+
+    return render(request, 'billets/create_billet.html', {
+        'ticket_form': ticket_form,
+        'critic_form': critic_form
+    })
 
 
 def list_tickets(request):
@@ -49,11 +67,11 @@ def list_tickets(request):
 
 def list_critics(request):
     critics = Critic.objects.all().order_by('-date_creation')
-    return render(request, 'billet/list_critics.html', {'critics': critics})
+    return render(request, 'critics/list_critics.html', {'critics': critics})
 
 def list_billets(request):
     billets = Billet.objects.all()
-    return render(request, 'billet/list_billets.html', {'billets': billets})
+    return render(request, 'billets/list_billets.html', {'billets': billets})
 
 def delete_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)

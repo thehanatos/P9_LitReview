@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Liste des Critiques</h2>
+<a href="{% url 'billet:create_billet' %}" class="btn btn-info">Créer un Billet</a>
+<ul>
+    {% for critic in critics %}
+        <li>
+            <strong>{{ critic.title }}</strong> - {{ critic.date_creation|date:"d M Y" }} <br>
+            Note : ⭐ {{ critic.note }}/5 <br>
+            {{ critic.comment }}
+            <p>Posté par <strong>{{ critic.user.username }}</strong> le {{ critic.date_creation|date:"d M Y" }} </p>
+        </li>
+    {% empty %}
+        <br><p>Aucune critique disponible.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

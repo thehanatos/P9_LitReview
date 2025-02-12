@@ -2,20 +2,19 @@
 {% block content %}
 <h2>Liste des Tickets</h2>
 <br>
-<a href="{% url 'billet:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
-
     {% for ticket in tickets %}
     <div class="col-6">
-        <h4>{{ ticket.book_title }}</h4>
+        <h4>{{ ticket.title }}</h4>
         <br>
         <p>{{ ticket.description }}</p><br>
         {% if ticket.image %}
             <img src="{{ ticket.image.url }}" alt="Image du ticket" width="200"><br>
         {% endif %}
         <br>
-        <p>Posté par {{ ticket.user.username }} le {{ ticket.created_at }}</p>
+        <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
         <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger">Supprimer</a>
-    </div>
+        <br>
+    </div><br>
 {% empty %}
     <p>Aucun ticket disponible.</p>
 {% endfor %}
