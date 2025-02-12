@@ -11,5 +11,6 @@ urlpatterns = [
     path('critics/', list_critics, name='list_critics'),
     path('billets/', list_billets, name='list_billets'),
     path('ticket/delete/<int:ticket_id>/', delete_ticket, name='delete_ticket'),
+    path("ticket/<int:ticket_id>/critic/", create_critic, name="create_critic"),
 
 ]

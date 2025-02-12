@@ -26,10 +26,12 @@ def create_critic(request, ticket_id=None):
             critic.user = request.user
             critic.ticket = ticket
             critic.save()
-            return redirect('billet:list_critics')
+            return redirect('billet:list_tickets')
+        else:
+            print("Erreurs dans le formulaire :", form.errors)
     else:
         form = CriticForm()
-    return render(request, 'billet/create_critic.html', {'form': form, 'ticket': ticket})
+    return render(request, 'critics/create_critic.html', {'form': form, 'ticket': ticket})
 
 def create_billet(request):
     if request.method == 'POST':
@@ -62,8 +64,9 @@ def create_billet(request):
 
 def list_tickets(request):
     tickets = Ticket.objects.all().order_by('-date_creation')  # Affiche les tickets du plus récent au plus ancien
-    print(tickets)
-    return render(request, 'tickets/ticket_list.html', {'tickets': tickets})
+    critics = Critic.objects.all()
+    
+    return render(request, 'tickets/ticket_list.html', {'tickets': tickets, 'critics': critics})
 
 def list_critics(request):
     critics = Critic.objects.all().order_by('-date_creation')

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Répondre au ticket : {{ ticket.title }}</h3>
+    <p>{{ ticket.description }}</p>
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="Image du ticket" width="150"><br>
+    {% endif %}
+    <br>
+    <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
+    <hr><br>
+
+    
+<form class="row g-4 mb-4" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-12">
+        <input type="text" class="form-control" id="id_title" name="title" placeholder="Titre de votre critique" required>
+    </div>
+    <br>
+    <div class="col-12">
+        <div class="star-rating">
+            <input type="radio" id="star-5" name="note" value="5"><label for="star-5"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star-4" name="note" value="4"><label for="star-4"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star-3" name="note" value="3"><label for="star-3"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star-2" name="note" value="2"><label for="star-2"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star-1" name="note" value="1"><label for="star-1"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star-0" name="note" value="0" checked>
+            <label for="star-0"><i class="far fa-star"></i></label>
+
+        </div>
+        
+        
+            
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-text">Commentaire</span>
+        <textarea class="form-control" id="id_comment" name="comment" aria-label="Commentaire" required>{% if form.comment.value %}{{ form.comment.value }}{% endif %}</textarea>
+
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-info">Envoyer</button>
+    </div>
+</form>
+
+<a href="{% url 'billet:list_tickets' %}" class="link-info">Retour à la liste des tickets</a>
+{% endblock %}
