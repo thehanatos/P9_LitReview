@@ -11,8 +11,11 @@
             {% endif %}
             <p><em>{{ ticket.description }}</em></p><br>
             <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
-            <a href="{% url 'billet:create_critic' ticket.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
-            <br><br>
+            {% if not ticket.critic %}
+                <a href="{% url 'billet:create_critic' ticket.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
+            {% else %}
+                <p class="text-info"><em>Une critique a déjà été postée.</em></p>
+            {% endif %}
             {% if ticket.user == request.user %}
                 <a href="{% url 'billet:edit_ticket' ticket.id %}" class="btn btn-info btn-sm">Modifier</a>
                 <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger btn-sm">Supprimer</a>

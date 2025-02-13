@@ -18,8 +18,13 @@ def create_ticket(request):
         form = TicketForm()
     return render(request, 'tickets/create_ticket.html', {'form': form})
 
+@login_required
 def create_critic(request, ticket_id=None):
     ticket = get_object_or_404(Ticket, id=ticket_id) if ticket_id else None
+    # Vérifier si une critique existe déjà pour ce ticket
+    if hasattr(ticket, 'critic'):
+        return redirect('billet:list_tickets')  # Rediriger vers la liste si une critique existe
+    
     if request.method == "POST":
         form = CriticForm(request.POST)
         if form.is_valid():

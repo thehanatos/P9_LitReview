@@ -15,7 +15,7 @@ class Ticket(models.Model):
 
 class Critic(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, blank=True, null=True)
+    ticket = models.OneToOneField(Ticket, on_delete=models.CASCADE)  # Un ticket ne peut avoir qu'une seule critique
     title = models.CharField(max_length=255)
     note = models.IntegerField(choices=[(i, i) for i in range(6)])
     comment = models.TextField()
