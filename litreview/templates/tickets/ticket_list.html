@@ -6,31 +6,35 @@
         <div class="col-6">
             <h4>{{ ticket.title }}</h4>
             <br>
-            <p>{{ ticket.description }}</p><br>
+            <p><em>{{ ticket.description }}</em></p><br>
             {% if ticket.image %}
                 <img src="{{ ticket.image.url }}" alt="Image du ticket" width="150"><br>
             {% endif %}
             <br>
             <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
-            <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger">Supprimer</a>
+            <a href="{% url 'billet:create_critic' ticket.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
             <br><br>
-            <a href="{% url 'billet:create_critic' ticket.id %}" class="btn btn-info">Répondre avec une critique</a>
+            <a href="{% url 'billet:edit_ticket' ticket.id %}" class="btn btn-info btn-sm">Modifier</a>
+            <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger btn-sm">Supprimer</a>
         </div><br>
         <!-- Affichage des critiques associées -->
-        <h4>Critique :</h4>
+        
         <div class="col-6">
         {% for critic in critics %}
             {% if critic.ticket.id == ticket.id %}
+            <h4>Critique :</h4>
                 <div class="critic">
                     <p><strong>{{ critic.user.username }}</strong> a noté : 
                         <span>
                             {% for _ in ""|rjust:critic.note %}⭐{% endfor %}/5
                         </span>
                     </p>
+                    <p>{{ critic.title }}</p>
                     <p><em>{{ critic.comment }}</em></p>
+                    
                 </div>
                 {% if critic.user == request.user %}
-                    <a href="{% url 'billet:edit_critic' critic.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{% url 'billet:edit_critic' critic.id %}" class="btn btn-info btn-sm">Modifier</a>
                     <a href="{% url 'billet:delete_critic' critic.id %}" class="btn btn-danger btn-sm">Supprimer</a>
                 {% endif %}
 
@@ -38,7 +42,7 @@
         {% empty %}
             <p>Aucune critique pour ce ticket.</p>
         {% endfor %}
-    </div>
+    </div><br>
         <hr>
     {% empty %}
         <p>Aucun ticket disponible.</p>

@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Modifier le ticket</h3>
+    <h3>Modifier le ticket</h3> <br>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form class="row g-4 mb-4" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}  <!-- Affichage du formulaire -->
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <br>
+        <div class="col-12">
+            <div class="mb-3">
+                <input type="text" name="title" id="{{ form.title.id_for_label }}" 
+                    class="form-control" value="{{ form.title.value|default_if_none:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <textarea name="description" id="{{ form.description.id_for_label }}" 
+                        class="form-control" rows="4" required>{{ form.description.value|default_if_none:'' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <input class="form-control d-none" type="file" id="formFile" id="id_image" name="image">
+                <label for="formFile" class="btn btn-outline-info">Sélectionner une image</label>
+            </div>
+            <div class="mb-3">
+                {% if ticket.image %}
+                    <br><p>Image actuelle :</p>
+                    <img src="{{ ticket.image.url }}" alt="Image du ticket" width="150">
+                {% endif %}
+            </div>
+
+        </div>
+    
+        <div class="col-12">
+            <button type="submit" class="btn btn-info">Enregistrer</button>
+        <a href="{% url 'billet:list_tickets' %}" class="btn btn-secondary">Annuler</a>
+        </div>
     </form>
 
-    <a href="{% url 'billet:list_tickets' %}" class="btn btn-secondary">Annuler</a>
 {% endblock %}
