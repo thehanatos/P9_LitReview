@@ -14,8 +14,11 @@
             <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
             <a href="{% url 'billet:create_critic' ticket.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
             <br><br>
-            <a href="{% url 'billet:edit_ticket' ticket.id %}" class="btn btn-info btn-sm">Modifier</a>
-            <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            {% if ticket.user == request.user %}
+                <a href="{% url 'billet:edit_ticket' ticket.id %}" class="btn btn-info btn-sm">Modifier</a>
+                <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            {% endif %}
+
         </div><br>
         <!-- Affichage des critiques associées -->
         
@@ -35,7 +38,7 @@
                 </div>
                 {% if critic.user == request.user %}
                     <a href="{% url 'billet:edit_critic' critic.id %}" class="btn btn-info btn-sm">Modifier</a>
-                    <a href="{% url 'billet:delete_critic' critic.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    <a href="{% url 'billet:delete_critic' critic.id %}" class="btn btn-danger btn-sm">Supprimer</a><br><br>
                 {% endif %}
 
             {% endif %}
