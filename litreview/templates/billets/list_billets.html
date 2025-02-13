@@ -10,12 +10,20 @@
                 {% if billet.ticket.image %}
                     <img src="{{ billet.ticket.image.url }}" alt="Image du ticket" width="150"><br>
                 {% endif %}
-                <hr>
-                <h4>Critique</h4>
-                <p><strong>{{ billet.critic.titre }}</strong> Note : ⭐ {{ billet.critic.note }}/5</p>
-                <p>{{ billet.critic.comment }}</p>
+                <br>
+                <h4>Critique :</h4>
+                <div class="critic">
+                    <p><strong>{{ billet.critic.user.username }}</strong> a noté : 
+                        <span>
+                            {% for _ in ""|rjust:billet.critic.note %}⭐{% endfor %}/5
+                        </span>
+                    </p>
+                    <p>{{ billet.critic.title }}</p>
+                    <p><em>{{ billet.critic.comment }}</em></p>
+                    
+                </div>
                 <p>Posté par <strong>{{ billet.user.username }}</strong> le {{ billet.critic.date_creation|date:"d M Y" }} </p>
-        </div><br>
+        </div><hr>
     {% empty %}
         <p>Aucun billet disponible.</p>
     {% endfor %}
