@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Ticket, Critic, Billet
 from .forms import TicketForm, CriticForm, BilletForm
 
@@ -32,6 +33,38 @@ def create_critic(request, ticket_id=None):
     else:
         form = CriticForm()
     return render(request, 'critics/create_critic.html', {'form': form, 'ticket': ticket})
+
+@login_required
+def edit_critic(request, critic_id):
+    critic = get_object_or_404(Critic, id=critic_id)
+
+    # Vérifie que seul l'auteur peut modifier sa critique
+    if critic.user != request.user:
+        return redirect('billet:list_tickets')
+
+    if request.method == "POST":
+        form = CriticForm(request.POST, instance=critic)
+        if form.is_valid():
+            form.save()
+            return redirect('billet:list_tickets')  # Redirige après modification
+    else:
+        form = CriticForm(instance=critic)
+
+    return render(request, 'critics/edit_critic.html', {'form': form, 'critic': critic})
+
+@login_required
+def delete_critic(request, critic_id):
+    critic = get_object_or_404(Critic, id=critic_id)
+
+    # Vérifie que seul l'auteur peut supprimer sa critique
+    if critic.user != request.user:
+        return redirect('billet:list_tickets')
+
+    if request.method == "POST":
+        critic.delete()
+        return redirect('billet:list_tickets')  # Redirige après suppression
+
+    return render(request, 'critics/delete_critic.html', {'critic': critic})
 
 def create_billet(request):
     if request.method == 'POST':

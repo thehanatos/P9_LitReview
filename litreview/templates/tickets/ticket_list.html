@@ -29,6 +29,11 @@
                     </p>
                     <p><em>{{ critic.comment }}</em></p>
                 </div>
+                {% if critic.user == request.user %}
+                    <a href="{% url 'billet:edit_critic' critic.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{% url 'billet:delete_critic' critic.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                {% endif %}
+
             {% endif %}
         {% empty %}
             <p>Aucune critique pour ce ticket.</p>

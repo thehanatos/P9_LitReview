@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Supprimer la critique</h3>
+    <p>Êtes-vous sûr de vouloir supprimer cette critique ?</p>
+    <p><strong>{{ critic.title }}</strong></p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <a href="{% url 'billet:list_tickets' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+{% endblock %}
