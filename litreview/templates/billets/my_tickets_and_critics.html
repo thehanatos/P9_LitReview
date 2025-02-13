@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h3>Mes Tickets</h3>
+    {% if tickets %}
+        
+            {% for ticket in tickets %}
+                <div class="col-10">
+                    <br><strong>{{ ticket.title }}</strong><br><br>
+                    {% if ticket.image %}
+                        <img src="{{ ticket.image.url }}" alt="Image du ticket" width="150">
+                    {% endif %}
+                    <br><br>
+                    <p><em>{{ ticket.description }}</em></p><br>
+                    <p>Posté par <strong>{{ ticket.user.username }}</strong> le {{ ticket.date_creation|date:"d M Y" }} </p>
+                    {% if ticket.user == request.user %}
+                        <a href="{% url 'billet:edit_ticket' ticket.id %}" class="btn btn-info btn-sm">Modifier</a>
+                        <a href="{% url 'billet:delete_ticket' ticket.id %}" class="btn btn-danger btn-sm">Supprimer</a><br><br>
+                    {% endif %}
+                    
+                </div>
+                <hr>
+            {% endfor %}
+            
+    {% else %}
+    <br><p>Vous n'avez publié aucun ticket.</p>
+    {% endif %}
+    <br>
+    <h3>Mes Critiques</h3><br>
+    {% if critics %}
+        <div class="col-10">
+            {% for critic in critics %}
+                    <strong>{{ critic.title }}</strong> &nbsp;
+                    <span>
+                        {% for _ in ""|rjust:critic.note %}⭐{% endfor %}/5
+                    </span>
+                    <br><br>
+                    <p><em>{{ critic.comment }}</em></p><br>
+                    <p>Posté par <strong>{{ critic.user.username }}</strong> le {{ critic.date_creation|date:"d M Y" }} </p>
+                    {% if critic.user == request.user %}
+                        <a href="{% url 'billet:edit_critic' critic.id %}" class="btn btn-info btn-sm">Modifier</a>
+                        <a href="{% url 'billet:delete_critic' critic.id %}" class="btn btn-danger btn-sm">Supprimer</a><br><br>
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Vous n'avez publié aucune critique.</p>
+    {% endif %}
+
+{% endblock %}

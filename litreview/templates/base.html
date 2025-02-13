@@ -66,7 +66,7 @@
                     {% if user.is_authenticated %}
                         {% comment %} <li class="nav-item"><a class="nav-link" href="{% url '#' %}">Flux</a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="#">Flux</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Posts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'billet:my_tickets_and_critics' %}">Posts</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'subscriptions:subscriptions_view' %}">Abonnements</a></li>
                         <div class="container-fluid">
                             <form class="d-flex" role="search">

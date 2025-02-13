@@ -134,3 +134,13 @@ def edit_ticket(request, ticket_id):
         form = TicketForm(instance=ticket)
 
     return render(request, 'tickets/edit_ticket.html', {'form': form, 'ticket': ticket})
+
+@login_required  
+def my_tickets_and_critics(request):
+    tickets = Ticket.objects.filter(user=request.user)  # Tickets de l'utilisateur
+    critics = Critic.objects.filter(user=request.user)  # Critiques de l'utilisateur
+
+    return render(request, 'billets/my_tickets_and_critics.html', {
+        'tickets': tickets,
+        'critics': critics
+    })
