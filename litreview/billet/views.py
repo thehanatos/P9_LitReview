@@ -116,3 +116,21 @@ def delete_ticket(request, ticket_id):
         ticket.delete()
 
     return redirect('billet:list_tickets')
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+
+    # Vérifie que l'utilisateur est bien l'auteur du ticket
+    if ticket.user != request.user:
+        return redirect('billet:list_tickets')
+
+    if request.method == "POST":
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('billet:list_tickets')  # Redirection après modification
+    else:
+        form = TicketForm(instance=ticket)
+
+    return render(request, 'tickets/edit_ticket.html', {'form': form, 'ticket': ticket})

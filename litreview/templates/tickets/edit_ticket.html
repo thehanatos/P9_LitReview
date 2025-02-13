@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Modifier le ticket</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Affichage du formulaire -->
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+
+    <a href="{% url 'billet:list_tickets' %}" class="btn btn-secondary">Annuler</a>
+{% endblock %}
