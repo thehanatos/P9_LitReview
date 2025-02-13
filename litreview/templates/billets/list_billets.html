@@ -13,7 +13,7 @@
                 <hr>
                 <h4>Critique</h4>
                 <p><strong>{{ billet.critic.titre }}</strong> Note : ⭐ {{ billet.critic.note }}/5</p>
-                <p>{{ billet.critic.comment }}</p><br>
+                <p>{{ billet.critic.comment }}</p>
                 <p>Posté par <strong>{{ billet.user.username }}</strong> le {{ billet.critic.date_creation|date:"d M Y" }} </p>
         </div><br>
     {% empty %}
