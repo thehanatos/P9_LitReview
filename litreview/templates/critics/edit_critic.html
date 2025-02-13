@@ -1,11 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Modifier la critique</h3>
-    <form method="POST">
+    <h3>Modifier la critique</h3><br>
+
+    <form class="row g-4 mb-4" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <div class="col-12">
+            <input type="text" class="form-control" id="id_title" name="title" placeholder="Titre : {% if form.title.value %}{{ form.title.value }}{% endif %}" required>
+        </div>
+        <br>
+        <div class="col-12">
+            <div class="star-rating">
+                <input type="radio" id="star-5" name="note" value="5"><label for="star-5"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star-4" name="note" value="4"><label for="star-4"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star-3" name="note" value="3"><label for="star-3"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star-2" name="note" value="2"><label for="star-2"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star-1" name="note" value="1"><label for="star-1"><i class="fas fa-star"></i></label>
+    
+            </div>
+            
+            
+                
+        </div>
+    
+        <div class="input-group">
+            <span class="input-group-text">Commentaire</span>
+            <textarea class="form-control" id="id_comment" name="comment" aria-label="Commentaire" required>{% if form.comment.value %}{{ form.comment.value }}{% endif %}</textarea>
+    
+        </div>
+    
+        <div class="col-12">
+            <button type="submit" class="btn btn-info">Enregistrer</button>
         <a href="{% url 'billet:list_tickets' %}" class="btn btn-secondary">Annuler</a>
+        </div>
     </form>
 {% endblock %}
