@@ -20,7 +20,7 @@ class BilletForm(forms.ModelForm):
         fields = ['title', 'note', 'comment']  
 
     def save(self, user):
-        # Crée un Ticket
+        # Create a Ticket
         ticket = Ticket.objects.create(
             user=user,
             title=self.cleaned_data['title'],
