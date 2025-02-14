@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Votre Flux</h2><br>
+
+    
+    {% for item in flux_items %}
+        {% if item.title and item.description %}  
+            <hr>
+            <div class="col-10 ticket">
+                <p><strong>{{ item.user.username }}</strong> a posté un ticket le {{ item.date_creation|date:"d M Y à H:i" }} :</p>
+                <h4>{{ item.title }}</h4>
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="Image du ticket" width="150">
+                {% endif %}
+                <br><br>
+                <p>{{ item.description }}</p>
+
+                {% if not item.critic %}
+                    <a href="{% url 'billet:create_critic' item.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
+                {% else %}
+                    <p class="text-info"><em>Une critique a déjà été postée.</em></p>
+                {% endif %}
+
+
+                {% if item.user == request.user %}
+                    <a href="{% url 'billet:edit_ticket' item.id %}" class="btn btn-info btn-sm">Modifier</a>
+                    <a href="{% url 'billet:delete_ticket' item.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                {% endif %}
+            </div>
+        {% else %}  
+        <hr>
+            <div class="col-10 critic">
+                <p><strong>{{ item.user.username }}</strong> a laissé une critique le {{ item.date_creation|date:"d M Y à H:i" }} :</p>
+                <h4>{{ item.title }}</h4>
+                <p>Note : 
+                    <span>
+                        {% for _ in ""|rjust:item.note %}⭐{% endfor %}/5
+                    </span>
+                </p>
+                {% if item.ticket.image %}
+                    <img src="{{ item.ticket.image.url }}" alt="Image du ticket" width="150"><br><br>
+                {% endif %}
+                <p><em>{{ item.comment }}</em></p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+
+
+{% endblock %}
