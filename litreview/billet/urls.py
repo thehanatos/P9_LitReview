@@ -1,7 +1,7 @@
 app_name = 'billet'
 
 from django.urls import path
-from .views import create_ticket, create_critic, create_billet, list_tickets, list_critics
+from .views import create_ticket, create_critic, create_billet, list_tickets, list_critics, flux
 from .views import list_billets, delete_ticket, edit_critic, delete_critic, edit_ticket, my_tickets_and_critics
 
 urlpatterns = [
@@ -17,5 +17,6 @@ urlpatterns = [
     path('critic/<int:critic_id>/delete/', delete_critic, name='delete_critic'),
     path('ticket/<int:ticket_id>/edit/', edit_ticket, name='edit_ticket'), 
     path('mes-publications/', my_tickets_and_critics, name='my_tickets_and_critics'),
+    path('flux/', flux, name='flux'),
 
 ]

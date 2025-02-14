@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Ticket, Critic, Billet
 from .forms import TicketForm, CriticForm, BilletForm
+from subscriptions.models import Subscription
 
 def create_ticket(request):
     if request.method == "POST":
@@ -149,3 +150,26 @@ def my_tickets_and_critics(request):
         'tickets': tickets,
         'critics': critics
     })
+    
+@login_required
+def flux(request):
+    user = request.user
+
+    # Récupérer les utilisateurs suivis
+    followed_users = Subscription.objects.filter(follower=user).values_list('followed', flat=True)
+
+    # Récupérer les billets et critiques des utilisateurs suivis + de l'utilisateur connecté
+    tickets = Ticket.objects.filter(user__in=followed_users) | Ticket.objects.filter(user=user)
+    critics = Critic.objects.filter(user__in=followed_users) | Critic.objects.filter(user=user)
+
+    # Récupérer les critiques en réponse aux billets de l'utilisateur connecté
+    critics_on_my_tickets = Critic.objects.filter(ticket__user=user)
+
+    # Fusionner toutes les données et trier par date
+    flux_items = sorted(
+        list(tickets) + list(critics) + list(critics_on_my_tickets),
+        key=lambda item: item.date_creation,
+        reverse=True  # Du plus récent au plus ancien
+    )
+    
+    return render(request, "flux/flux.html", {"flux_items": flux_items})
