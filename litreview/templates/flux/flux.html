@@ -3,7 +3,11 @@
 {% block content %}
     <h2>Votre Flux</h2><br>
 
-    
+    <div class="col-10">
+        <a href="{% url 'billet:create_ticket' %}" class="btn btn-info btn-lg">Créer un Ticket</a> &nbsp;
+        <a href="{% url 'billet:create_billet' %}" class="btn btn-info btn-lg">Créer un Billet</a>
+    </div>
+    <br>
     {% for item in flux_items %}
         {% if item.title and item.description %}  
             <hr>
@@ -17,7 +21,7 @@
                 <p>{{ item.description }}</p>
 
                 {% if not item.critic %}
-                    <a href="{% url 'billet:create_critic' item.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a>
+                    <a href="{% url 'billet:create_critic' item.id %}" class="btn btn-info btn-sm">Répondre avec une critique</a> 
                 {% else %}
                     <p class="text-info"><em>Une critique a déjà été postée.</em></p>
                 {% endif %}
@@ -27,6 +31,7 @@
                     <a href="{% url 'billet:edit_ticket' item.id %}" class="btn btn-info btn-sm">Modifier</a>
                     <a href="{% url 'billet:delete_ticket' item.id %}" class="btn btn-danger btn-sm">Supprimer</a>
                 {% endif %}
+                <br>
             </div>
         {% else %}  
         <hr>
@@ -41,9 +46,9 @@
                 {% if item.ticket.image %}
                     <img src="{{ item.ticket.image.url }}" alt="Image du ticket" width="150"><br><br>
                 {% endif %}
-                <p><em>{{ item.comment }}</em></p>
+                <p><em>{{ item.comment }}</em></p><br>
             </div>
-        {% endif %}
+        {% endif %}<br>
     {% endfor %}
 
 

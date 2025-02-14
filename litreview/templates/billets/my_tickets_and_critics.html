@@ -7,7 +7,7 @@
         
             {% for ticket in tickets %}
                 <div class="col-10">
-                    <br><strong>{{ ticket.title }}</strong><br><br>
+                    <br><h4>{{ ticket.title }}</h4><br>
                     {% if ticket.image %}
                         <img src="{{ ticket.image.url }}" alt="Image du ticket" width="150">
                     {% endif %}
@@ -31,11 +31,14 @@
     {% if critics %}
         <div class="col-10">
             {% for critic in critics %}
-                    <strong>{{ critic.title }}</strong> &nbsp;
+                    <h4>{{ critic.title }}</h4> &nbsp;
                     <span>
                         {% for _ in ""|rjust:critic.note %}⭐{% endfor %}/5
                     </span>
                     <br><br>
+                    {% if critic.ticket.image %}
+                        <img src="{{ critic.ticket.image.url }}" alt="Image du ticket" width="150"><br><br>
+                    {% endif %}
                     <p><em>{{ critic.comment }}</em></p><br>
                     <p>Posté par <strong>{{ critic.user.username }}</strong> le {{ critic.date_creation|date:"d M Y" }} </p>
                     {% if critic.user == request.user %}
