@@ -130,21 +130,21 @@ Publier une critique ou une demande d’avis
 
 Voici un aperçu de l’interface utilisateur, affichant les critiques et tickets de la communauté :
 
-![Connexion de l'application](screenshots/screenshot_connexion.png)
+![Connexion de l'application](litreview/screenshots/screenshot_connexion.png)
 
-![Connexion de l'application](screenshots/screenshot_log_in.png)
+![Connexion de l'application](litreview/screenshots/screenshot_log_in.png)
 
-![Inscription de l'application](screenshots/screenshot_sign_in.png)
+![Inscription de l'application](litreview/screenshots/screenshot_sign_in.png)
 
-![Flux](screenshots/screenshot_flux.png)
+![Flux](litreview/screenshots/screenshot_flux.png)
 
-![Posts](screenshots/screenshot_posts.png)
+![Posts](litreview/screenshots/screenshot_posts.png)
 
-![Abonnements](screenshots/screenshot_subscriptions.png)
+![Abonnements](litreview/screenshots/screenshot_subscriptions.png)
 
-![Edit ticket](screenshots/screenshot_edit_ticket.png)
+![Edit ticket](litreview/screenshots/screenshot_edit_ticket.png)
 
-![Critique](screenshots/screenshot_critique.png)
+![Critique](litreview/screenshots/screenshot_critique.png)
 
 ## Licence
 
