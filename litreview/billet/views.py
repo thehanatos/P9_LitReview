@@ -22,9 +22,9 @@ def create_ticket(request):
 @login_required
 def create_critic(request, ticket_id=None):
     ticket = get_object_or_404(Ticket, id=ticket_id) if ticket_id else None
-    # Vérifier si une critique existe déjà pour ce ticket
+    # Check if a critic exists 
     if hasattr(ticket, 'critic'):
-        return redirect('billet:list_tickets')  # Rediriger vers la liste si une critique existe
+        return redirect('billet:list_tickets')  # Redirects
     
     if request.method == "POST":
         form = CriticForm(request.POST)
@@ -44,7 +44,7 @@ def create_critic(request, ticket_id=None):
 def edit_critic(request, critic_id):
     critic = get_object_or_404(Critic, id=critic_id)
 
-    # Vérifie que seul l'auteur peut modifier sa critique
+    # Check that only the author can edit the critic
     if critic.user != request.user:
         return redirect('billet:list_tickets')
 
@@ -52,7 +52,7 @@ def edit_critic(request, critic_id):
         form = CriticForm(request.POST, instance=critic)
         if form.is_valid():
             form.save()
-            return redirect('billet:list_tickets')  # Redirige après modification
+            return redirect('billet:list_tickets')  # Redirects after modification
     else:
         form = CriticForm(instance=critic)
 
@@ -62,13 +62,13 @@ def edit_critic(request, critic_id):
 def delete_critic(request, critic_id):
     critic = get_object_or_404(Critic, id=critic_id)
 
-    # Vérifie que seul l'auteur peut supprimer sa critique
+    # Check that only the author can delete the critic
     if critic.user != request.user:
         return redirect('billet:list_tickets')
 
     if request.method == "POST":
         critic.delete()
-        return redirect('billet:list_tickets')  # Redirige après suppression
+        return redirect('billet:list_tickets')  # Redirects after deletion
 
     return render(request, 'critics/delete_critic.html', {'critic': critic})
 
@@ -79,18 +79,18 @@ def create_billet(request):
         
         if ticket_form.is_valid() and critic_form.is_valid():
             ticket = ticket_form.save(commit=False)
-            ticket.user = request.user  # Associer l'utilisateur actuel
+            ticket.user = request.user  # Pair with the current user
             ticket.save()
 
             critic = critic_form.save(commit=False)
             critic.user = request.user
-            critic.ticket = ticket  # Associer le ticket à la critique
+            critic.ticket = ticket  # Pair ticket and critic
             critic.save()
 
             billet = Billet.objects.create(user=request.user, ticket=ticket, critic=critic)
             billet.save()
 
-            return redirect('billet:list_billets')  # Rediriger après la création
+            return redirect('billet:list_billets')  # Redirects after creation
     else:
         ticket_form = TicketForm()
         critic_form = CriticForm()
@@ -102,7 +102,7 @@ def create_billet(request):
 
 
 def list_tickets(request):
-    tickets = Ticket.objects.all().order_by('-date_creation')  # Affiche les tickets du plus récent au plus ancien
+    tickets = Ticket.objects.all().order_by('-date_creation')  # Displays tickets most recent to oldest
     critics = Critic.objects.all()
     
     return render(request, 'tickets/ticket_list.html', {'tickets': tickets, 'critics': critics})
@@ -127,7 +127,7 @@ def delete_ticket(request, ticket_id):
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
 
-    # Vérifie que l'utilisateur est bien l'auteur du ticket
+    # Check that the author owns the ticket
     if ticket.user != request.user:
         return redirect('billet:list_tickets')
 
@@ -135,7 +135,7 @@ def edit_ticket(request, ticket_id):
         form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             form.save()
-            return redirect('billet:list_tickets')  # Redirection après modification
+            return redirect('billet:list_tickets')  # Redirects after modification
     else:
         form = TicketForm(instance=ticket)
 
@@ -143,8 +143,8 @@ def edit_ticket(request, ticket_id):
 
 @login_required  
 def my_tickets_and_critics(request):
-    tickets = Ticket.objects.filter(user=request.user)  # Tickets de l'utilisateur
-    critics = Critic.objects.filter(user=request.user)  # Critiques de l'utilisateur
+    tickets = Ticket.objects.filter(user=request.user)  # Tickets of the user
+    critics = Critic.objects.filter(user=request.user)  # Critics of the user
 
     return render(request, 'billets/my_tickets_and_critics.html', {
         'tickets': tickets,
@@ -155,21 +155,21 @@ def my_tickets_and_critics(request):
 def flux(request):
     user = request.user
 
-    # Récupérer les utilisateurs suivis
+    # Retrieve followed users
     followed_users = Subscription.objects.filter(follower=user).values_list('followed', flat=True)
 
-    # Récupérer les billets et critiques des utilisateurs suivis + de l'utilisateur connecté
+    # Retrieve billets critics from followed users and the current one
     tickets = Ticket.objects.filter(user__in=followed_users) | Ticket.objects.filter(user=user)
     critics = Critic.objects.filter(user__in=followed_users) | Critic.objects.filter(user=user)
 
-    # Récupérer les critiques en réponse aux billets de l'utilisateur connecté
+    # Retrieve critics responded to the current user
     critics_on_my_tickets = Critic.objects.filter(ticket__user=user)
 
-    # Fusionner toutes les données et trier par date
+    # Merge all data and filter by date
     flux_items = sorted(
         list(tickets) + list(critics) + list(critics_on_my_tickets),
         key=lambda item: item.date_creation,
-        reverse=True  # Du plus récent au plus ancien
+        reverse=True  # Most recent to oldest
     )
     
     return render(request, "flux/flux.html", {"flux_items": flux_items})
