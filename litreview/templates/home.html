@@ -6,10 +6,6 @@
 <div class="form-signin w-100 m-auto text-center">
     {% if user.is_authenticated %}
         <h2 class="mb-3">Bienvenue, {{ user.username }} !</h2>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-info">Se déconnecter</button>
-        </form>
         <br>
         <a href="{% url 'billet:create_ticket' %}" class="btn btn-info">Créer un Ticket</a>
         <a href="{% url 'billet:create_billet' %}" class="btn btn-info">Créer un Billet</a><br><br>
