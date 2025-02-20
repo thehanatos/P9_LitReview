@@ -1,5 +1,6 @@
 asarPy==1.0.1
 asgiref==3.8.1
+beautifulsoup4==4.13.3
 certifi==2024.8.30
 charset-normalizer==3.4.0
 Cython==3.0.11
@@ -13,15 +14,18 @@ meson==1.5.2
 numpy==2.2.0
 packaging==24.2
 pandas==2.2.3
+pillow==11.1.0
 pycairo==1.27.0
-Pygments==2.18.0
+Pygments==2.19.1
 PyGObject==3.50.0
 python-dateutil==2.9.0.post0
 pytz==2024.2
 requests==2.32.3
-setuptools==75.6.0.post20241226
+setuptools==75.8.0.post20250203
 six==1.17.0
+soupsieve==2.6
 sqlparse==0.5.3
+typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 wheel==0.45.1
